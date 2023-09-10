@@ -19,7 +19,7 @@ export async function handleLogin(email, password, navigate) {
     console.log("email----", email, password);
     let data = { "email": email, "password": password };
     try {
-        const response = await axios.post('https://appointment-scheduler-bwez.onrender.com//api/signin', data);
+        const response = await axios.post('https://appointment-scheduler-bwez.onrender.com/api/signin', data);
         console.log("response data:- ", response.data.user._id);
         if (response.error_message) {
             toast.error(response.error_message);
@@ -36,7 +36,7 @@ export async function handleLogin(email, password, navigate) {
 export async function handleRegister(email, firstName, lastName, password, navigate) {
     let data = { "firstName": firstName, "lastName": lastName, "email": email, "password": password };
     try {
-        const response = await axios.post('https://appointment-scheduler-bwez.onrender.com//api/signup', data);
+        const response = await axios.post('https://appointment-scheduler-bwez.onrender.com/api/signup', data);
         if (response.error_message) {
             toast.error(response.error_message);
         } else {
@@ -53,7 +53,7 @@ export async function handleRegister(email, firstName, lastName, password, navig
 
 export async function getAllUser() {
     try {
-        const response = await axios.get('https://appointment-scheduler-bwez.onrender.com//api/getalluser');
+        const response = await axios.get('https://appointment-scheduler-bwez.onrender.com/api/getalluser');
         if (response.error_message) {
             toast.error(response.error_message);
         } else {
@@ -69,7 +69,7 @@ export async function handleAgendaSubmit(title, agenda, email, selectedDate, sch
     let data = { "title": title, "agenda": agenda, "email": email, "slot_date": selectedDate, "slot_time": schedule, "appointmentWith": withAppointment }
     console.log("data", data);
     try {
-        const response = await axios.post('https://appointment-scheduler-bwez.onrender.com//api/createAppointments',data);
+        const response = await axios.post('https://appointment-scheduler-bwez.onrender.com/api/createAppointments',data);
         if (response.error_message) {
             toast.error(response.error_message);
         }
