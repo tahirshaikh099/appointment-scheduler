@@ -4,7 +4,7 @@
     "description": "Collection of API's requrired for scheduling project.",
     "main": "index.js",
     "scripts": {
-        "dev":"node index.js",
+        "dev":"npm i && node index.js",
         "start:production": "cd client && npm install && npm run build && cd ../server && npm install && npm start",
         "build":"npm i"
     },
