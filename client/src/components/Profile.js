@@ -43,7 +43,7 @@ const Profile = () => {
 
     const handleOffHoursChange = async (offHours) => {
         try {
-            const response = await axios.post('http://localhost:5000/api/offhours', { "offHours": offHours });
+            const response = await axios.post('https://appointment-scheduler-bwez.onrender.com//api/offhours', { "offHours": offHours });
             if (response.status === 200) {
                 toast.success("Offhours submitted", {
                     position: "top-right",
@@ -58,7 +58,7 @@ const Profile = () => {
     useEffect(() => {
         const getUserData = async () => {
             try {
-                const response = await axios.post('http://localhost:5000/api/user', { "email": localStoredEmail });
+                const response = await axios.post('https://appointment-scheduler-bwez.onrender.com//api/user', { "email": localStoredEmail });
                 if (response.status === 200) {
                     setUserEmail(response.data.user.email);
                     setUserName(response.data.user.fullName);
@@ -76,7 +76,7 @@ const Profile = () => {
     useEffect(() => {
         const getAllAppointmentData = async () => {
             try {
-                const response = await axios.post('http://localhost:5000/api/appointments', {
+                const response = await axios.post('https://appointment-scheduler-bwez.onrender.com//api/appointments', {
                     "email": localStoredEmail
                 });
                 if (response.status === 200) {
@@ -94,7 +94,7 @@ const Profile = () => {
     const handleUserNameChange = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/updateuser', { "email": userEmail, "firstName": firstName, "lastName": lastName });
+            const response = await axios.post('https://appointment-scheduler-bwez.onrender.com//api/updateuser', { "email": userEmail, "firstName": firstName, "lastName": lastName });
             if (response.status === 200) {
                 setFirstName(response.data.user.firstName);
                 setLastName(response.data.user.lastName);
@@ -110,7 +110,7 @@ const Profile = () => {
     const handlePasswordChange = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/updatepassword', { "email": userEmail, "currentPassword": currentPassword, "newPassword": newPassword });
+            const response = await axios.post('https://appointment-scheduler-bwez.onrender.com//api/updatepassword', { "email": userEmail, "currentPassword": currentPassword, "newPassword": newPassword });
             if (response.status === 200) {
                 setUserEmail(response.data.user.email);
                 setUserName(response.data.user.fullName);
