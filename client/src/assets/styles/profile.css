@@ -1,0 +1,120 @@
+.profile-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.left-side {
+    flex: 1;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.right-side {
+    flex: 2;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.profile-section {
+    padding: 20px;
+}
+
+.appointments-section {
+    padding: 20px;
+}
+
+
+.profile-form form,
+.appointments-section form {
+    margin-top: 10px;
+}
+
+.appointment-cards {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointment-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.appointment-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.right-side {
+    flex: 1;
+    padding: 20px;
+}
+
+.right-side h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.profile-form {
+    text-align: left;
+}
+
+.profile-form p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.profile-form label {
+    font-weight: bold;
+}
+
+.profile-form input[type="text"],
+.profile-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.profile-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.profile-form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.profile-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
