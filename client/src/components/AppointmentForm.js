@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { time } from "../utils/resource";
 import { toast } from "react-toastify";
 import { handleAgendaSubmit, getAllUser } from "../utils/resource";
+import "../assets/styles/appointmentForm.css"
+
 
 const AppointmentDateSelector = () => {
 
@@ -51,50 +53,50 @@ const AppointmentDateSelector = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission behavior
-      
+
         // Prepare the form data
         const formData = {
-          title,
-          agenda,
-          selectedDate,
-          myEmail,
-          schedule,
-          withAppointment,
+            title,
+            agenda,
+            selectedDate,
+            myEmail,
+            schedule,
+            withAppointment,
         };
-      
+
         console.log("formData:- ", formData);
-      
+
         // Call the submitAgenda function with the form data
         handleAgendaSubmit(formData)
-          .then((response) => {
-            // Handle the response
-            console.log('Agenda submitted successfully:', response);
-      
-            // Check if the response contains a 400 status code with the expected message
-            if (response.status === 400 && response.data.message === "This slot is not available for booking") {
-              // Show a toast message for the error
-              toast.error("This slot is not available for booking, Please select next slot", {
-                position: "top-right",
-                autoClose: 3000, // Close the message after 3 seconds
-              });
-            } else {
-              // Show a success message
-              toast.success("Agenda submitted successfully", {
-                position: "top-right",
-                autoClose: 3000, // Close the message after 3 seconds
-              });
-            }
-          })
-          .catch((error) => {
-            // Handle other errors, e.g., show a general error message
-            console.error('Error submitting agenda:', error);
-            toast.error("Error submitting agenda", {
-              position: "top-right",
-              autoClose: 3000,
+            .then((response) => {
+                // Handle the response
+                console.log('Agenda submitted successfully:', response);
+
+                // Check if the response contains a 400 status code with the expected message
+                if (response.status === 400 && response.data.message === "This slot is not available for booking") {
+                    // Show a toast message for the error
+                    toast.error("This slot is not available for booking, Please select next slot", {
+                        position: "top-right",
+                        autoClose: 3000, // Close the message after 3 seconds
+                    });
+                } else {
+                    // Show a success message
+                    toast.success("Agenda submitted successfully", {
+                        position: "top-right",
+                        autoClose: 3000, // Close the message after 3 seconds
+                    });
+                }
+            })
+            .catch((error) => {
+                // Handle other errors, e.g., show a general error message
+                console.error('Error submitting agenda:', error);
+                toast.error("Error submitting agenda", {
+                    position: "top-right",
+                    autoClose: 3000,
+                });
             });
-          });
-      };
-      
+    };
+
     const weekdays = getNextWeekdays();
 
 
@@ -107,59 +109,49 @@ const AppointmentDateSelector = () => {
     }
 
     return (
-        <main className="App">
-            <Link to="/profile">Go to Profile</Link>
-            <h1>Schedule meetings</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="title"> Title: </label><input id='meetingTitle' name='title' required type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
+        <main className="dashboard">
+            <form className="dashboard-form" onSubmit={handleSubmit}>
+                <h1 className="dashboard-title">Schedule meetings</h1>
+                <label htmlFor="title"> Title: </label><input id='dashboard__meetingTitle' name='title' required type='text'
+                    value={title} onChange={(e) => setTitle(e.target.value)} />
 
-                    <label htmlFor="agenda"> Agenda: </label><input id='meetingAgenda' name='agenda' required type='text' value={agenda} onChange={(e) => setAgenda(e.target.value)} />
+                <label htmlFor="agenda"> Agenda: </label><input id='dashboard__meetingAgenda' name='agenda' required type='text'
+                    value={agenda} onChange={(e) => setAgenda(e.target.value)} />
 
-                    <div className='form'>
-                        <label htmlFor="slot">Choose your slot: </label>
-                        <input type="date" value={selectedDate} onChange={handleDateChange} min={weekdays[0].toISOString().split('T')[0]} max={weekdays[weekdays.length - 1].toISOString().split('T')[0]} />
+                <div className='form'>
+                    <label htmlFor="slot">Choose your slot: </label>
+                    <input id="dashboard__slot" type="date" value={selectedDate} onChange={handleDateChange}
+                        min={weekdays[0].toISOString().split('T')[0]} max={weekdays[weekdays.length -
+                            1].toISOString().split('T')[0]} />
+                </div>
+                <span className="select__wrapper"></span>
+                <div className='dashboard__form'>
+                    <label htmlFor='startTime'>Time</label>
+                    <select name='startTime' id='dashboard__startTime' onChange={handleTimeChange} value={schedule}>
+                        {time.map((t) => (
+                            <option key={t.id} value={t.t} id={t.id}>
+                                {t.t}
+                            </option>
+                        ))}
+                    </select>
                     </div>
-                    <span className="validity"></span>
-                    <div className='form'>
-                        <label htmlFor='startTime'>Time</label>
-                        <select
-                            name='startTime'
-                            id='startTime'
-                            onChange={handleTimeChange}
-                            value={schedule}
-                        >
-                            {time.map((t) => (
-                                <option key={t.id} value={t.t} id={t.id}>
-                                    {t.t}
-                                </option>
-                            ))}
-                        </select>
-                    
                     <div className='select__wrapper'>
-                        <label htmlFor='appointment'>Guest</label>
-                        <select
-                            name='appointment'
-                            id='appointment'
-                            onChange={handleGetUserdetails}
-                            value={withAppointment}
-                        >
-                            <option value='' key='defaultOption'>
+                        <label htmlFor="slot">Choose slot: </label>
+                        <select name='appointment' id='dashboard__appointment' onChange={handleGetUserdetails} value={withAppointment}>
+                            <option id="dashboard__selectUser" value='' key='defaultOption'>
                                 Select a user
                             </option>
                             {userList.map((user) => (
-                                <option key={user.fullName} value={user.fullName}>
+                                <option id="dashboard__selectUser" key={user.fullName} value={user.fullName}>
                                     {user.fullName}
                                 </option>
                             ))}
                         </select>
                     </div>
-                </div>
-
                 <button className='signupButton' type="submit">Submit</button>
-            </div>
-        </form>
-        </main >
+                <Link className="profile-button" to="/profile">Go to Profile</Link>
+            </form>
+        </main>
     );
 };
 
