@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { handleLogin } from "../utils/resource";
+import "react-toastify/dist/ReactToastify.css";
+import "../assets/styles/login.css"
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
     
     const handleSubmit = (e) => {
 		if (email.trim() && password.trim()) {
