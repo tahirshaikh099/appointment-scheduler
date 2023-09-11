@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { handleRegister } from "../utils/resource";
+import { toast } from "react-toastify";
 import '../assets/styles/register.css'
 
 
@@ -12,14 +13,24 @@ const Signup = () => {
 	const [email, setEmail] = useState("");
 	const navigate = useNavigate();
 
+	const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (firstName.trim() && lastName.trim() && password.trim() && email.trim()) {
-			handleRegister(email, firstName, lastName, password, navigate);
-			setFirstName("");
-			setLastName("");
-			setPassword("");
-			setEmail("");
+			if (emailRegex.test(email)) {
+				handleRegister(email, firstName, lastName, password, navigate);
+				setFirstName("");
+				setLastName("");
+				setPassword("");
+				setEmail("");
+			}else{
+				toast.error("Invalid email address", {
+                    position: "top-right",
+                    autoClose: 3000,
+                });
+			}
 		}
 	};
 
