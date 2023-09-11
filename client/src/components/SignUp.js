@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { handleRegister } from "../utils/resource";
-import './register.css'
+import '../assets/styles/register.css'
 
 
 
@@ -29,7 +29,7 @@ const Signup = () => {
 				<h2 className='signup__title'>Create an account</h2>
 				<label htmlFor='username'>First Name</label>
 				<input
-					id='username'
+					id='firstname'
 					name='firstname'
 					required
 					type='text'
@@ -38,7 +38,7 @@ const Signup = () => {
 				/>
 				<label htmlFor='username'>Last Name</label>
 				<input
-					id='username'
+					id='lastname'
 					name='lastname'
 					required
 					type='text'
