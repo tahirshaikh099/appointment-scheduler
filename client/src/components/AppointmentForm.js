@@ -52,49 +52,41 @@ const AppointmentDateSelector = () => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent the default form submission behavior
+        e.preventDefault();
 
-        // Prepare the form data
-        const formData = {
-            title,
-            agenda,
-            selectedDate,
-            myEmail,
-            schedule,
-            withAppointment,
-        };
-
-        console.log("formData:- ", formData);
-
-        // Call the submitAgenda function with the form data
-        handleAgendaSubmit(formData)
-            .then((response) => {
-                // Handle the response
-                console.log('Agenda submitted successfully:', response);
-
-                // Check if the response contains a 400 status code with the expected message
-                if (response.status === 400 && response.data.message === "This slot is not available for booking") {
-                    // Show a toast message for the error
-                    toast.error("This slot is not available for booking, Please select next slot", {
-                        position: "top-right",
-                        autoClose: 3000, // Close the message after 3 seconds
-                    });
-                } else {
-                    // Show a success message
-                    toast.success("Agenda submitted successfully", {
-                        position: "top-right",
-                        autoClose: 3000, // Close the message after 3 seconds
-                    });
-                }
-            })
-            .catch((error) => {
-                // Handle other errors, e.g., show a general error message
-                console.error('Error submitting agenda:', error);
-                toast.error("Error submitting agenda", {
-                    position: "top-right",
-                    autoClose: 3000,
-                });
+        if (!title || !agenda || !selectedDate || !myEmail || schedule === "Select" || withAppointment === "Select a user") {
+            return toast.error("Please fill all the details", {
+                position: "top-right",
+                autoClose: 3000,
             });
+        } else {
+            const formData = {
+                title,
+                agenda,
+                selectedDate,
+                myEmail,
+                schedule,
+                withAppointment
+            }
+
+            handleAgendaSubmit(formData)
+                .then((response) => {
+                    console.log('Agenda submitted successfully:', response);
+                    if (response.status === 400 && response.data.message === "This slot is not available for booking") {
+                        toast.error("This slot is not available for booking, Please select next slot", {
+                            position: "top-right",
+                            autoClose: 3000,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error submitting agenda:', error);
+                    toast.error("Error submitting agenda", {
+                        position: "top-right",
+                        autoClose: 3000,
+                    });
+                });
+        }
     };
 
     const weekdays = getNextWeekdays();
@@ -134,20 +126,20 @@ const AppointmentDateSelector = () => {
                             </option>
                         ))}
                     </select>
-                    </div>
-                    <div className='select__wrapper'>
-                        <label htmlFor="slot">Choose slot: </label>
-                        <select name='appointment' id='dashboard__appointment' onChange={handleGetUserdetails} value={withAppointment}>
-                            <option id="dashboard__selectUser" value='' key='defaultOption'>
-                                Select a user
+                </div>
+                <div className='select__wrapper'>
+                    <label htmlFor="slot">Choose slot: </label>
+                    <select name='appointment' id='dashboard__appointment' onChange={handleGetUserdetails} value={withAppointment}>
+                        <option id="dashboard__selectUser" value='' key='defaultOption'>
+                            Select a user
+                        </option>
+                        {userList.map((user) => (
+                            <option id="dashboard__selectUser" key={user.fullName} value={user.fullName}>
+                                {user.fullName}
                             </option>
-                            {userList.map((user) => (
-                                <option id="dashboard__selectUser" key={user.fullName} value={user.fullName}>
-                                    {user.fullName}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                        ))}
+                    </select>
+                </div>
                 <button className='signupButton' type="submit">Submit</button>
                 <Link className="profile-button" to="/profile">Go to Profile</Link>
             </form>
