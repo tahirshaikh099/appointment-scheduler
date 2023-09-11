@@ -48,14 +48,15 @@ const signUp = async (req, res) => {
 
 
 const signIn = async (req, res) => {
+    const { email, password } = req.body;
     try {
-        if (!req.body.email || !req.body.password) {
+        if (!email || !password) {
             return res.status(StatusCodes.BAD_REQUEST).json({
                 message: "Please enter email and password",
             });
         }
 
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(StatusCodes.BAD_REQUEST).json({
@@ -63,23 +64,24 @@ const signIn = async (req, res) => {
             });
         }
 
-        if (user.authenticate(req.body.password)) {
-            // Password matches, no need for JWT token
-            const { _id, firstName, lastName, email, role, fullName } = user;
-            res.status(StatusCodes.OK).json({
-                user: { _id, firstName, lastName, email, role, fullName },
+        const isPasswordValid = await bcrypt.compare(password, user.hash_password);
+
+        if (!isPasswordValid) {
+            return res.status(StatusCodes.UNAUTHORIZED).json({
+                message: "Current password is incorrect",
             });
-        } else {
-            // Incorrect password
-            res.status(StatusCodes.UNAUTHORIZED).json({
-                message: "Incorrect password",
-            });
-        }
+        }else{
+
+        const { _id, firstName, lastName, role, fullName } = user;
+
+        res.status(StatusCodes.OK).json({
+            user: { _id, firstName, lastName, email, role, fullName },
+        });
+    }
     } catch (error) {
         res.status(StatusCodes.BAD_REQUEST).json({ error });
     }
 };
-
 
 
 const getUser = async (req, res) => {
