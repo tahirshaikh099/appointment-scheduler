@@ -93,7 +93,7 @@ export async function handleAgendaSubmit(formData) {
         "title": formData.title,
         "agenda": formData.agenda,
         "slot_date": formData.selectedDate,
-        "email": formData.email,
+        "email": formData.myEmail,
         "slot_time": formData.schedule,
         "name": formData.withAppointment
     };
