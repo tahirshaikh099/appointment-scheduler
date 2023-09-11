@@ -10,7 +10,7 @@ import Profile from './components/Profile';
 function App() {
   return (
     <div>
-      <Router>
+      <Router basename='/login'>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
