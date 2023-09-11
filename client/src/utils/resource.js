@@ -19,14 +19,21 @@ export async function handleLogin(email, password, navigate) {
     // console.log("email----", email, password);
     let data = { "email": email, "password": password };
     const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    console.log("emailRegex:- ",emailRegex);
     if (emailRegex.test(email)) {
         try {
             const response = await axios.post('https://appointment-scheduler-bwez.onrender.com/api/signin', data);
-            console.log("response data:- ", response.data.user._id);
+            // console.log("response data:- ", response.data.user._id);
+            if(response === 401){
+                toast.success("Incorrect password", {
+                    position: "top-right",
+                    autoClose: 3000,
+                });
+            }
             if (response.error_message) {
                 toast.success("Something went wrong!", {
                     position: "top-right",
-                    autoClose: 3000, // Close the message after 3 seconds
+                    autoClose: 3000,
                 });
             } else {
                 toast.success("Logged In succesfully", {
@@ -41,13 +48,12 @@ export async function handleLogin(email, password, navigate) {
             console.error(err);
         }
     } else {
-        toast.error("Invalid email address", {
+        return toast.error("Invalid email address", {
             position: "top-right",
             autoClose: 3000,
         });
     }
 }
-
 export async function handleRegister(email, firstName, lastName, password, navigate) {
     let data = { "firstName": firstName, "lastName": lastName, "email": email, "password": password };
     try {
