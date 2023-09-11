@@ -1,8 +1,9 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
-import "./profile.css"
+import { Link } from 'react-router-dom';
 import { time } from "../utils/resource";
 import { toast } from "react-toastify";
+import "../assets/styles/profile.css"
 
 
 const Profile = () => {
@@ -124,58 +125,98 @@ const Profile = () => {
     };
 
     return (
-        <div>
-            {loading ? (<p>Loading...</p>) : (
-                <div>
-                    <h2>User Profile</h2>
-                    <p>Email: {userEmail}</p>
-                    <p>Username: {userName}</p>
-                    <form onSubmit={handleUserNameChange}>
-                        <label>
-                            First Name: <input type="text" name="First Name" value={firstName} onChange={handleFirstName} />
-                        </label>
-                        <label>
-                            Last Name: <input type="text" name="Last Name" value={lastName} onChange={handleLastName} />
-                        </label>
-                        <button type="submit">Update</button>
-                    </form>
-                    <label>To update your password, please provide:</label>
-                    <form onSubmit={handlePasswordChange}>
-                        <label>
-                            Current Password: <input type="password" name="currentPassword" value={currentPassword} onChange={handlesetcurrentPassword} />
-                        </label>
-                        <label>
-                            New Password: <input type="password" name="newPassword" value={newPassword} onChange={handlesetnewPassword} />
-                        </label>
-                        <button type="submit">Update</button>
-                    </form>
-                    <div className='form'>
-                        <label htmlFor='startTime'>Your Off Hours</label>
-                        <select name='startTime' id='startTime' onChange={handleTimeChange} value={offHours}>
-                            {time.map((t) => (
-                                <option key={t.id} value={t.t} id={t.id}>
-                                    {t.t}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <h2>Upcoming Appointments</h2>
-                        <div className="appointment-cards">
-                            {currentAppointments.map((appointment) => (
-                                <div key={appointment._id} className="appointment-card">
-                                    <h3>{appointment.title}</h3>
-                                    <p>Agenda: {appointment.agenda}</p>
-                                    <p>Name: {appointment.name}</p>
-                                    <p>Slot Time: {appointment.slots.slot_time}</p>
-                                    <p>Slot Date: {appointment.slots.slot_date}</p>
-                                </div>
-                            ))}
+        <div className="profile-container">
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <>
+                    <div className="left-side">
+                        <div className="profile-section">
+                            <h2>User Profile</h2>
+                            <p>Email: <label>{userEmail}</label></p>
+                            <p>Username: <label>{userName}</label></p>
+                            <form className="profile-form" onSubmit={handleUserNameChange}>
+                                <label>To update your Username, please provide:</label>
+                                <label>
+                                    First Name:{" "}
+                                    <input
+                                        type="text"
+                                        name="First Name"
+                                        value={firstName}
+                                        onChange={handleFirstName}
+                                    />
+                                </label>
+                                <label>
+                                    Last Name:{" "}
+                                    <input
+                                        type="text"
+                                        name="Last Name"
+                                        value={lastName}
+                                        onChange={handleLastName}
+                                    />
+                                </label>
+                                <button type="submit">Update</button>
+                            </form>
+                            <label>To update your password, please provide:</label>
+                            <form className="profile-form" onSubmit={handlePasswordChange}>
+                                <label>
+                                    Current Password:{" "}
+                                    <input
+                                        type="password"
+                                        name="currentPassword"
+                                        value={currentPassword}
+                                        onChange={handlesetcurrentPassword}
+                                    />
+                                </label>
+                                <label>
+                                    New Password:{" "}
+                                    <input
+                                        type="password"
+                                        name="newPassword"
+                                        value={newPassword}
+                                        onChange={handlesetnewPassword}
+                                    />
+                                </label>
+                                <button type="submit">Update</button>
+                            </form>
+                            <div className="form">
+                                <label htmlFor="startTime">Your Off Hours</label>
+                                <select
+                                    name="startTime"
+                                    id="startTime"
+                                    onChange={handleTimeChange}
+                                    value={offHours}
+                                >
+                                    {time.map((t) => (
+                                        <option key={t.id} value={t.t} id={t.id}>
+                                            {t.t}
+                                        </option>
+                                    ))}
+                                </select>
+                                <Link className='link' to='/dashboard'>Go to Dashboard</Link>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div className="right-side">
+                        <div className="appointments-section">
+                            <h2>Upcoming Appointments</h2>
+                            <div className="appointment-cards">
+                                {currentAppointments.map((appointment) => (
+                                    <div key={appointment._id} className="appointment-card">
+                                        <h3>{appointment.title}</h3>
+                                        <p>Agenda: {appointment.agenda}</p>
+                                        <p>Name: {appointment.name}</p>
+                                        <p>Slot Time: {appointment.slots.slot_time}</p>
+                                        <p>Slot Date: {appointment.slots.slot_date}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </>
             )}
         </div>
+
     );
 };
 
