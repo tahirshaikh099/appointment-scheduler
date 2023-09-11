@@ -24,7 +24,7 @@ export async function handleLogin(email, password, navigate) {
         try {
             const response = await axios.post('https://appointment-scheduler-bwez.onrender.com/api/signin', data);
             // console.log("response data:- ", response.data.user._id);
-            if(response === 401){
+            if(response.status === 401){
                 toast.success("Incorrect password", {
                     position: "top-right",
                     autoClose: 3000,
